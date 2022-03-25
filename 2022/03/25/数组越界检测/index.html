@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
 <meta property="article:published_time" content="2022-03-25T04:14:01.000Z">
-<meta property="article:modified_time" content="2022-03-25T12:31:16.800Z">
+<meta property="article:modified_time" content="2022-03-25T12:47:15.518Z">
 <meta property="article:author" content="shineahead">
 <meta property="article:tag" content="小白">
 <meta name="twitter:card" content="summary">
@@ -53,7 +53,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2022-03-25 20:31:16'
+  postUpdate: '2022-03-25 20:47:15'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -142,7 +142,7 @@
       }
     }
     detectApple()
-    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">shineahead</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">数组越界检测</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-25T04:14:01.000Z" title="发表于 2022-03-25 12:14:01">2022-03-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-25T12:31:16.800Z" title="更新于 2022-03-25 20:31:16">2022-03-25</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="数组越界检测"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>该文章用来记录一次简单的数组越界检测，<a target="_blank" rel="noopener" href="http://222.195.149.139:20500/">查看实验手册</a> </p>
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">shineahead</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">数组越界检测</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-25T04:14:01.000Z" title="发表于 2022-03-25 12:14:01">2022-03-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-25T12:47:15.518Z" title="更新于 2022-03-25 20:47:15">2022-03-25</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="数组越界检测"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>该文章用来记录一次简单的数组越界检测，<a target="_blank" rel="noopener" href="http://222.195.149.139:20500/">查看实验手册</a> </p>
 <p>用到的知识仅有c++基础语法和两个简单的STL容器：vector和map以及一颗耐心</p>
 <hr>
 <h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h5 id="实验的一些小理解："><a href="#实验的一些小理解：" class="headerlink" title="实验的一些小理解："></a>实验的一些小理解：</h5><p>该实验主要可以分成两个部分：</p>
@@ -175,7 +175,7 @@
 <p><strong>&#x3D;&#x3D;要注意，这里的值都是字符串类型的，需要使用stoi()函数把它变成整型的&#x3D;&#x3D;</strong></p>
 <blockquote>
 <p>！！！stoi函数不能用在一个空的字符串上，否则会报错</p>
-<p><img src="C:\Users\shineahead\Pictures\Screenshots\数组越界检测\stoi.png"></p>
+<p><img src="https://s2.loli.net/2022/03/25/8gpIblhLunzJOYv.png" alt="stoi.png"></p>
 </blockquote>
 </blockquote>
 <p>std::string id: 表示该表达式内的变量名，一般是数组表达式里面的引用变量，例如a[n]，id则等于n</p>
@@ -221,15 +221,17 @@
 </li>
 </ul>
 <hr>
-<h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><p>— 该实验的核心思想就是要算出expression里面的值，然后与存储在idmap里面的进行比较，判断是否出现了数组索引越界的情况，故问题就简化成了如何写int op_expression(Expression *expression)；</p>
-<p>— 而该函数内首要就是要判断expression里面的各种元素是否存在</p>
-<p>— 该函数的返回值就应该是数组的索引值</p>
-<p>— 这里为了便于处理expression里面存在数组的情况又写了一个int op_array(ArrExpr *arrexpr)，</p>
-<p>该函数的返回值是数组里面存储的值，例如：a[100] &#x3D; 10， 那么这个函数的任务就是返回10</p>
-<p>— &#x3D;&#x3D;这次实验我认为比较巧妙的地方就是这上面上个函数互相调用处理，互相递归，简化了问题处理&#x3D;&#x3D;</p>
+<h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><ul>
+<li>该实验的核心思想就是要算出expression里面的值，然后与存储在idmap里面的进行比较，判断是否出现了数组索引越界的情况，故问题就简化成了如何写int op_expression(Expression *expression)；</li>
+<li>而该函数内首要就是要判断expression里面的各种元素是否存在</li>
+<li>该函数的返回值就应该是数组的索引值</li>
+<li>这里为了便于处理expression里面存在数组的情况又写了一个int op_array(ArrExpr *arrexpr)，</li>
+<li>该函数的返回值是数组里面存储的值，例如：a[100] &#x3D; 10， 那么这个函数的任务就是返回10</li>
+<li>&#x3D;&#x3D;这次实验我认为比较巧妙的地方就是这上面上个函数互相调用处理，互相递归，简化了问题处理&#x3D;&#x3D;</li>
+</ul>
 <h3 id="实验的函数分析"><a href="#实验的函数分析" class="headerlink" title="实验的函数分析"></a>实验的函数分析</h3><ul>
 <li><p>&#96;&#96;&#96; c++<br>int op_expression(Expression* expression)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt; 1.判断表达式内的元素- </span><br><span class="line">&gt;</span><br><span class="line">&gt; &gt; - ``` c++</span><br><span class="line">&gt; &gt;   if (expression-&gt;digitsequence.empty())</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt; 1.判断表达式内的元素</span><br><span class="line">&gt;</span><br><span class="line">&gt; &gt; - ``` c++</span><br><span class="line">&gt; &gt;   if (expression-&gt;digitsequence.empty())</span><br></pre></td></tr></table></figure>
 <blockquote>
 <blockquote>
 <p>  判断里面是否有数字，empty函数用来判断容器是否为空，较于stoi和c_str()更加方便</p>
