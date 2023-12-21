@@ -1,0 +1,6 @@
+/* 导航栏、小标题、副标题颜色 */
+.site-page,
+#site-name,
+#subtitle {
+    color: #157b9d !important;
+}

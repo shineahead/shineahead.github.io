@@ -1,0 +1,335 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>数组越界检测 | iOcean</title><meta name="author" content="shineahead"><meta name="copyright" content="shineahead"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言111该文章用来记录一次简单的数组越界检测，查看实验手册  用到的知识仅有c++基础语法和两个简单的STL容器：vector和map以及一颗耐心  正文实验的一些小理解该实验主要可以分成两个部分：  一是数组和变量的定义（都存储在VarDelList中） 二是数组和变量的使用（都存储在ArrayUseList中） 注：grammartype我在此实验中并没有用到   实验的结构体解析 stru">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数组越界检测">
+<meta property="og:url" content="https://shineahead.github.io/2021/03/25/%E6%95%B0%E7%BB%84%E8%B6%8A%E7%95%8C%E6%A3%80%E6%B5%8B/index.html">
+<meta property="og:site_name" content="iOcean">
+<meta property="og:description" content="前言111该文章用来记录一次简单的数组越界检测，查看实验手册  用到的知识仅有c++基础语法和两个简单的STL容器：vector和map以及一颗耐心  正文实验的一些小理解该实验主要可以分成两个部分：  一是数组和变量的定义（都存储在VarDelList中） 二是数组和变量的使用（都存储在ArrayUseList中） 注：grammartype我在此实验中并没有用到   实验的结构体解析 stru">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://th.bing.com/th/id/R.3e23980e5b2260405f962d91eec4dc3b?rik=jvd7Fp4f8VDa9w&riu=http%3a%2f%2fi2.hdslb.com%2fbfs%2farchive%2f9894475072e57737ad5b231ef519bc57d1724531.jpg&ehk=2eJHhk8OykNiWtQtkTcKbvzit%2bR9chrGscl1uq0ZPTA%3d&risl=&pid=ImgRaw&r=0">
+<meta property="article:published_time" content="2021-03-25T04:14:04.000Z">
+<meta property="article:modified_time" content="2023-12-15T15:48:53.224Z">
+<meta property="article:author" content="shineahead">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://th.bing.com/th/id/R.3e23980e5b2260405f962d91eec4dc3b?rik=jvd7Fp4f8VDa9w&riu=http%3a%2f%2fi2.hdslb.com%2fbfs%2farchive%2f9894475072e57737ad5b231ef519bc57d1724531.jpg&ehk=2eJHhk8OykNiWtQtkTcKbvzit%2bR9chrGscl1uq0ZPTA%3d&risl=&pid=ImgRaw&r=0"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/shineahead/imageBed@main//QQ.jpg"><link rel="canonical" href="https://shineahead.github.io/2021/03/25/%E6%95%B0%E7%BB%84%E8%B6%8A%E7%95%8C%E6%A3%80%E6%B5%8B/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '数组越界检测',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-12-15 23:48:53'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/config/css/style.css"><meta name="generator" content="Hexo 6.0.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cdn.jsdelivr.net/gh/shineahead/imageBed@main//QQ.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-list"></i><span> 菜单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%85%B3%E4%BA%8E"><i class="fa-fw /about/"></i><span> 0</span></a></li><li><a class="site-page child" href="/myself"><i class="fa-fw /myself/"></i><span> 1</span></a></li><li><a class="site-page child" href="/butterfly%E4%B8%BB%E9%A2%98"><i class="fa-fw https://github.com/jerryc127/hexo-theme-butterfly/"></i><span> 2</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://th.bing.com/th/id/R.3e23980e5b2260405f962d91eec4dc3b?rik=jvd7Fp4f8VDa9w&amp;riu=http%3a%2f%2fi2.hdslb.com%2fbfs%2farchive%2f9894475072e57737ad5b231ef519bc57d1724531.jpg&amp;ehk=2eJHhk8OykNiWtQtkTcKbvzit%2bR9chrGscl1uq0ZPTA%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">iOcean</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-list"></i><span> 菜单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%85%B3%E4%BA%8E"><i class="fa-fw /about/"></i><span> 0</span></a></li><li><a class="site-page child" href="/myself"><i class="fa-fw /myself/"></i><span> 1</span></a></li><li><a class="site-page child" href="/butterfly%E4%B8%BB%E9%A2%98"><i class="fa-fw https://github.com/jerryc127/hexo-theme-butterfly/"></i><span> 2</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">数组越界检测</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-25T04:14:04.000Z" title="发表于 2021-03-25 12:14:04">2021-03-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-12-15T15:48:53.224Z" title="更新于 2023-12-15 23:48:53">2023-12-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="数组越界检测"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/03/25/%E6%95%B0%E7%BB%84%E8%B6%8A%E7%95%8C%E6%A3%80%E6%B5%8B/#post-comment"><span id="twikoo-count"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="前言111"><a href="#前言111" class="headerlink" title="前言111"></a>前言111</h2><p>该文章用来记录一次简单的数组越界检测，<a target="_blank" rel="noopener" href="http://222.195.149.139:20500/">查看实验手册</a> </p>
+<p>用到的知识仅有c++基础语法和两个简单的STL容器：vector和map以及一颗耐心</p>
+<hr>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h3 id="实验的一些小理解"><a href="#实验的一些小理解" class="headerlink" title="实验的一些小理解"></a>实验的一些小理解</h3><p>该实验主要可以分成两个部分：</p>
+<ul>
+<li>一是数组和变量的定义（都存储在VarDelList中）</li>
+<li>二是数组和变量的使用（都存储在ArrayUseList中）</li>
+<li>注：grammartype我在此实验中并没有用到</li>
+</ul>
+<hr>
+<h3 id="实验的结构体解析"><a href="#实验的结构体解析" class="headerlink" title="实验的结构体解析"></a>实验的结构体解析</h3><ul>
+<li><p>struct ArrExpr：</p>
+<blockquote>
+<p>std::string id: 表示该数组的名称</p>
+<p>int dimension：表示该数组的维度</p>
+<p>std::vector&lt;struct Expression*&gt; length:</p>
+<blockquote>
+<p>以我个人片面的理解来看，vector相当于一个加强版的数组，它可以在里面存各种类型的数据，比较好用</p>
+<p>length[0]表示该数组的第一个维度的表达式。例如a[0]，那么length[0]的值则为0</p>
+<p>length[1]表示该数组的第二个维度的表达式。例如a(4)(5)（此处以()来代替[]，避免关键符号），那么length[0]的值则为4，length[1]的值则为5</p>
+<p>事实上，length[x]代表一个一个vector括号里的元素，即是struct Expression*</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>struct Expression：</p>
+</li>
+<li><blockquote>
+<p>int grammartype：不同语法的种类（目前没有发现有什么特别大的用处）</p>
+<p>std::string digitsequence：表示该表达式内的纯数字，一看就明白吧。例如：a[5]，digitsequence的值为” 5 “ </p>
+<blockquote>
+<p>&#x3D;&#x3D;要注意，这里的值都是字符串类型的，需要使用stoi()函数把它变成整型的&#x3D;&#x3D;</p>
+<blockquote>
+<p><strong>！！！stoi函数不能用在一个空的字符串上，否则会报错</strong></p>
+<p><img src="https://s2.loli.net/2022/03/25/8gpIblhLunzJOYv.png" alt="stoi.png"></p>
+</blockquote>
+</blockquote>
+<p>std::string id: 表示该表达式内的变量名，一般是数组表达式里面的引用变量，例如a[n]，id则等于n</p>
+<p>std::string op：表示该表达式内的运算符号，例如：’ + ‘, ‘ - ‘, ‘ * ‘, ‘ &#x2F; ‘；</p>
+<p>srtuct ArrExpr*：表示该表达式有一个数组，例如：b[a[0]]；</p>
+<p>struct Expression* expr：表示该表达式内还有表达式，很好理解。一般此元素不会会单独出现，都会和其他的如数字和变量一起，例如：b[n + 65]，那么后面这个数字65就是下一级的expression里的数字了；</p>
+<blockquote>
+<p>当表达式内有运算符号时，此时就比较麻烦了，需要考虑各种类型的混合运算，此处先略过，在下文讲解函数时细说；</p>
+</blockquote>
+</blockquote>
+<ul>
+<li><p>struct ArrayUse：</p>
+</li>
+<li><blockquote>
+<p><strong>注：此结构体表示数组的赋值表达式</strong></p>
+</blockquote>
+<blockquote>
+<p>int grammartype：不同语法的种类（目前没有发现有什么特别大的用处）；</p>
+<p>struct ArrExpr *arrexpr：表示数组的结构体，容易理解；</p>
+<p>struct Expression *expression：表示一个赋值的表达式，例如：a[10] &#x3D; n，那么n就是存储在expression里面的变量；</p>
+<p>std::string id：表示变量的名称，一般用于给单变量赋值的，例如：n &#x3D; 10；</p>
+<p>std::string op：表示赋值的运算符号，在此实验中仅有” &#x3D; “；</p>
+</blockquote>
+<ul>
+<li><p>struct VarDef：</p>
+</li>
+<li><blockquote>
+<p><strong>注：此结构体表示数组的声明表达式</strong></p>
+</blockquote>
+<blockquote>
+<p>int grammartype：不同语法的种类（目前没有发现有什么特别大的用处）；</p>
+<p>std::string id：表示声明元素的名称，例如：int n；int a[100]；</p>
+<p>int dimension：表示数组的维度，单变量是没有该项的</p>
+<p>std::vector&lt;struct Expression*&gt; length</p>
+<blockquote>
+<p>和前文所叙述的作作用一样</p>
+</blockquote>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><ul>
+<li>该实验的核心思想就是要算出expression里面的值，然后与存储在idmap里面的进行比较，判断是否出现了数组索引越界的情况，故问题就简化成了如何写int op_expression(Expression *expression)；</li>
+<li>而该函数内首要就是要判断expression里面的各种元素是否存在</li>
+<li>该函数的返回值就应该是数组的索引值</li>
+<li>这里为了便于处理expression里面存在数组的情况又写了一个int op_array(ArrExpr *arrexpr)，</li>
+<li>该函数的返回值是数组里面存储的值，例如：a[100] &#x3D; 10， 那么这个函数的任务就是返回10</li>
+<li><strong>这次实验我认为比较巧妙的地方就是这上面上个函数互相调用处理，互相递归，简化了问题处理</strong></li>
+</ul>
+<h3 id="实验的函数分析"><a href="#实验的函数分析" class="headerlink" title="实验的函数分析"></a>实验的函数分析</h3><ul>
+<li><pre><code class="c++">int op_expression(Expression* expression)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- &gt; 1.判断表达式内的元素</span><br><span class="line">  &gt;</span><br><span class="line">  &gt; &gt; ```c++</span><br><span class="line">  &gt; &gt; if (expression-&gt;digitsequence.empty())</span><br></pre></td></tr></table></figure>
+&gt; &gt;
+&gt; &gt; 判断里面是否有数字，empty函数用来判断容器是否为空，较于stoi和c_str()更加方便
+&gt;
+&gt; &gt; <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (expression-&gt;id.<span class="built_in">empty</span>())</span><br></pre></td></tr></table></figure>
+&gt; &gt;
+&gt; &gt; 判断里面是否存在变量n之类的
+&gt;
+&gt; &gt; <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (expression-&gt;op.<span class="built_in">empty</span>())</span><br></pre></td></tr></table></figure>
+&gt; &gt;
+&gt; &gt; 判断里面是否存在运算符号
+&gt;
+&gt; &gt; <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (expression-&gt;arrexpr)</span><br></pre></td></tr></table></figure>
+&gt; &gt;
+&gt; &gt; 判断里面是否存在数组元素
+&gt; &gt;
+&gt; &gt; &gt; ==注：为了向下判断数组的时候方便，定义一个全局布尔型的变量checkflag==
+&gt; &gt;
+&gt; &gt; &gt; 为了便于向下取数组的值的时候更加便利，定义此变量。一旦发现任何一个数组出现了越界行为，便把checkflag的值变成true。同时在op_experssion中判断一下checkflag，如果为true的话直接返回一个负值，然后在checker.cpp里面判断checkflag
+</code></pre>
+</li>
+<li><pre><code class="c++">int op_array(ArrExpr *arrexpr)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- &gt; 1.判断数组的维度</span><br><span class="line">  &gt;</span><br><span class="line">  &gt; &gt; - ```c++</span><br><span class="line">  &gt; &gt;   if (arrexpr-&gt;dimension == 1)&#123;</span><br><span class="line">  &gt; &gt;   &#125;</span><br><span class="line">  &gt; &gt;   else if (arrexpr-&gt;dimension == 2)&#123;</span><br><span class="line">  &gt; &gt;   &#125;</span><br></pre></td></tr></table></figure>
+&gt;
+&gt; 2.判断该数组是否越界
+&gt;
+&gt; &gt; - ```c++
+&gt; &gt;   uselen1 = op_expression(arrexpr-&gt;length[0]);
+&gt; &gt;   uselen2 = op_expression(arrexpr-&gt;length[1]);
+&gt; &gt;
+&gt; &gt;   if (uselen1 &gt;= idmap[id] || uselen2 &gt;= idmap[id + &quot;1&quot;] || uselen1 &lt; 0 || uselen2 &lt; 0)
+&gt; &gt;   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  以二维数组为例，这里op_array函数调用了op_expression函数</span><br><span class="line"></span><br><span class="line">3.取出数组的赋值</span><br><span class="line"></span><br><span class="line">- ```c++</span><br><span class="line">  value = idmap[id + to_string(uselen1) + to_string(uselen2)]</span><br></pre></td></tr></table></figure>
+&gt; &gt;
+&gt; &gt;   以二维数组为例
+</code></pre>
+</li>
+<li><p>&#96;&#96;&#96;c++<br>void checker()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt; 1.声明数组</span><br><span class="line">&gt;</span><br><span class="line">&gt; &gt; 声明的时候注意判断该声明是单变量还是数组</span><br><span class="line">&gt; &gt;</span><br><span class="line">&gt; &gt; ```c++</span><br><span class="line">&gt; &gt; if (!def-&gt;dimension)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p><strong>表示没有维度，说明是单变量</strong></p>
+</blockquote>
+<p>2.使用数组 </p>
+<blockquote>
+<p>每次使用数组的时候记得保存数组的值，以防之后可能会调用该值</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">value = <span class="built_in">op_expression</span>(arruse-&gt;expression);</span><br><span class="line">idmap[id + <span class="built_in">to_string</span>(uselen1) + <span class="built_in">to_string</span>(uselen2)] = value;</span><br></pre></td></tr></table></figure></blockquote>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h3 id="实验心得"><a href="#实验心得" class="headerlink" title="实验心得"></a>实验心得</h3><p>万事开头难，此言得之。刚开始也是反复看了好几遍实验手册才把各种结构体给弄清楚，各种嵌套啥的。其实这次实验的收获还是蛮大的，除了自己思考了实现代码的逻辑层之外，还发现和学会了几种函数的用法，最重要的让我明白了：某些东西看不懂是由于不熟悉而造成的，实际上的难度可能并没有那么大。总而言之，千万不要轻言放弃，放弃之后再想坚持就难了</p>
+<hr>
+<h1 id="感谢阅读"><a href="#感谢阅读" class="headerlink" title="感谢阅读"></a>感谢阅读</h1></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">shineahead</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://shineahead.github.io/2021/03/25/%E6%95%B0%E7%BB%84%E8%B6%8A%E7%95%8C%E6%A3%80%E6%B5%8B/">https://shineahead.github.io/2021/03/25/%E6%95%B0%E7%BB%84%E8%B6%8A%E7%95%8C%E6%A3%80%E6%B5%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://shineahead.github.io" target="_blank">iOcean</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://th.bing.com/th/id/R.3e23980e5b2260405f962d91eec4dc3b?rik=jvd7Fp4f8VDa9w&amp;riu=http%3a%2f%2fi2.hdslb.com%2fbfs%2farchive%2f9894475072e57737ad5b231ef519bc57d1724531.jpg&amp;ehk=2eJHhk8OykNiWtQtkTcKbvzit%2bR9chrGscl1uq0ZPTA%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2023/09/22/%E8%87%AA%E6%88%91%E4%BB%8B%E7%BB%8D/"><img class="prev-cover" src="https://cdn.jsdelivr.net/gh/shineahead/imageBed@main//20230923120718.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">自我介绍</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cdn.jsdelivr.net/gh/shineahead/imageBed@main//QQ.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">shineahead</div><div class="author-info__description">Everything wins</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/shineahead"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到shineahead的博客</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80111"><span class="toc-number">1.</span> <span class="toc-text">前言111</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%AD%A3%E6%96%87"><span class="toc-number"></span> <span class="toc-text">正文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E7%90%86%E8%A7%A3"><span class="toc-number">0.1.</span> <span class="toc-text">实验的一些小理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%9A%84%E7%BB%93%E6%9E%84%E4%BD%93%E8%A7%A3%E6%9E%90"><span class="toc-number">0.2.</span> <span class="toc-text">实验的结构体解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF"><span class="toc-number">0.3.</span> <span class="toc-text">实现思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%9A%84%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="toc-number">0.4.</span> <span class="toc-text">实验的函数分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E5%BF%83%E5%BE%97"><span class="toc-number">0.5.</span> <span class="toc-text">实验心得</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%84%9F%E8%B0%A2%E9%98%85%E8%AF%BB"><span class="toc-number"></span> <span class="toc-text">感谢阅读</span></a></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/12/22/Vercel%E5%9F%9F%E5%90%8D%E5%A4%B1%E6%95%88%E9%97%AE%E9%A2%98/" title="Vercel域名失效问题"><img src="https://image.9game.cn/2020/9/17/176753732.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Vercel域名失效问题"/></a><div class="content"><a class="title" href="/2023/12/22/Vercel%E5%9F%9F%E5%90%8D%E5%A4%B1%E6%95%88%E9%97%AE%E9%A2%98/" title="Vercel域名失效问题">Vercel域名失效问题</a><time datetime="2023-12-21T16:07:46.000Z" title="发表于 2023-12-22 00:07:46">2023-12-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/15/Beta%E5%86%B2%E5%88%BA2-3/" title="Beta冲刺2-3"><img src="https://th.bing.com/th/id/R.6d119a62a99142b5e53ca7e82d7b0ad6?rik=ewJ74b%2bmtCe74A&amp;riu=http%3a%2f%2fi2.hdslb.com%2fbfs%2farchive%2f30ef3d94440494a89e6dedbc52c8770e74b2c2a2.jpg&amp;ehk=%2b39gBaWs2N%2brRayFTaZxVF1X4vYevNpEEUZrMvYS6DI%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Beta冲刺2-3"/></a><div class="content"><a class="title" href="/2023/12/15/Beta%E5%86%B2%E5%88%BA2-3/" title="Beta冲刺2-3">Beta冲刺2-3</a><time datetime="2023-12-15T13:54:27.000Z" title="发表于 2023-12-15 21:54:27">2023-12-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/15/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E8%AE%B0%E5%BD%95/" title="服务器部署记录"><img src="https://th.bing.com/th/id/R.1e7fec9a0c0e3db3302a361ba132e7a6?rik=e7hR96j4hjXzJw&amp;riu=http%3a%2f%2fimgs.aixifan.com%2fo_1c7l37nc77pf9271ug2159f14ih19.jpg&amp;ehk=0CbzUsZH0CDMj7SKbzTN9pdUNW1nB%2biIUajLRKqGMfw%3d&amp;risl=1&amp;pid=ImgRaw&amp;r=0" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="服务器部署记录"/></a><div class="content"><a class="title" href="/2023/12/15/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E8%AE%B0%E5%BD%95/" title="服务器部署记录">服务器部署记录</a><time datetime="2023-12-15T08:17:11.000Z" title="发表于 2023-12-15 16:17:11">2023-12-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/10/Beta%E5%86%B2%E5%88%BA1-3/" title="Beta冲刺1-3"><img src="https://c.wallhere.com/photos/fc/26/The_Legend_of_Zelda_The_Legend_of_Zelda_Breath_of_the_Wild_video_games_video_game_art_Link_horse_riding_horse_sword-1701913.jpg!d" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Beta冲刺1-3"/></a><div class="content"><a class="title" href="/2023/12/10/Beta%E5%86%B2%E5%88%BA1-3/" title="Beta冲刺1-3">Beta冲刺1-3</a><time datetime="2023-12-10T13:06:15.000Z" title="发表于 2023-12-10 21:06:15">2023-12-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/03/Alpha%E5%86%B2%E5%88%BA3-3/" title="Alpha冲刺3-3"><img src="https://img.zcool.cn/community/01647e5d7ca8b6a801211d53afab7a.jpg@1280w_1l_2o_100sh.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Alpha冲刺3-3"/></a><div class="content"><a class="title" href="/2023/12/03/Alpha%E5%86%B2%E5%88%BA3-3/" title="Alpha冲刺3-3">Alpha冲刺3-3</a><time datetime="2023-12-03T11:53:36.000Z" title="发表于 2023-12-03 19:53:36">2023-12-03</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By shineahead</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">本地搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo.iocean.site/',
+      region: 'ap-shanghai',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.vemoji)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.iocean.site/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      document.getElementById('twikoo-count').innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
