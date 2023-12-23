@@ -10,8 +10,8 @@
 }
 
 /* 修改链接hover的颜色 */
-a {
-    color: #9A5795 !important;
+#article-container a {
+    color: #F87B7F !important;
 }
 
 /* 文章页H1-H6图标样式效果 */
