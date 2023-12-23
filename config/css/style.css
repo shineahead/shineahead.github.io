@@ -9,6 +9,11 @@
     font-family: arzhu !important;
 }
 
+/* 修改链接hover的颜色 */
+a:hover {
+    color: #9A5795;
+}
+
 /* 文章页H1-H6图标样式效果 */
 /* 文章标题右侧显示锚点 */
 #article-container.post-content .headerlink {
