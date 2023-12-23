@@ -10,11 +10,16 @@
 }
 
 /* 文章页H1-H6图标样式效果 */
-/*文章标题右侧显示锚点*/
+/* 文章标题右侧显示锚点 */
 #article-container.post-content .headerlink {
     float: right;
     font-size: 90%;
     padding-top: 4px;
+}
+
+#article-container.post-content .headerlink::before {
+    content: '\f0c1';
+    font-family: "Font Awesome 6 Free";
 }
 
 h1::before,
