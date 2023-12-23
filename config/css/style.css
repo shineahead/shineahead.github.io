@@ -10,8 +10,8 @@
 }
 
 /* 修改链接hover的颜色 */
-a:hover {
-    color: #9A5795;
+a {
+    color: #9A5795 !important;
 }
 
 /* 文章页H1-H6图标样式效果 */
